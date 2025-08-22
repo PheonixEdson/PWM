@@ -7,7 +7,7 @@ export default function Home() {
       <div className={styles.profile}>
         {/* Foto */}
         <Image
-          src="/me.png"
+          src="https://media.licdn.com/dms/image/v2/D4D03AQEujvr8jfNNEA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1698277975626?e=1758758400&v=beta&t=3uB9XBEOOTMnsB0ep2QePC_6RXVCMUzX4blhLOSVE5U"
           alt="Minha foto"
           width={200}
           height={200}
