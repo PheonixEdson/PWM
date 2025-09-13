@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
+
+.title {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #0070f3;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.word {
+  font-size: 2rem;
+  letter-spacing: 12px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.info {
+  margin: 15px 0;
+  font-size: 1.1rem;
+}
+
+.svg {
+  width: 220px;
+  height: 220px;
+  margin: 20px 0;
+}
+
+.teclado {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.teclado button {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background: #0070f3;
+  color: white;
+  transition: 0.2s ease;
+}
+
+.teclado button:hover {
+  background: #0059c1;
+}
+
+.teclado button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.reiniciar {
+  margin-top: 25px;
+  padding: 12px 24px;
+  background: green;
+  color: white;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reiniciar:hover {
+  background: darkgreen;
+}
+
+.vitoria {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: green;
+  font-weight: bold;
+}
+
+.derrota {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: red;
+  font-weight: bold;
+}
