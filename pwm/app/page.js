@@ -54,15 +54,16 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* Link para o jogo da Forca */}
+      {/* Seção Demonstração */}
       <section className={styles.section}>
         <h2>🎮 Demonstração</h2>
-        <p>
-          Veja minha implementação do{" "}
-          <Link href="/forca" className={styles.link}>
-            Jogo da Forca
-          </Link>
-        </p>
+        <ul>
+          <li>
+            <Link href="/forca" className={styles.link}>
+              🪢 Jogo da Forca
+            </Link>
+          </li>
+        </ul>
       </section>
     </main>
   );
