@@ -1,4 +1,3 @@
-// app/forca/page.js
 "use client";
 import { useState, useMemo } from "react";
 import styles from "./forca.module.css";
@@ -10,38 +9,46 @@ const WORDS = [
   "FORCA","PALAVRA","DESAFIO","ARVORE","SENHA","CRIPTOGRAFIA","BANCO"
 ];
 
-function pickRandom() {
-  const i = Math.floor(Math.random() * WORDS.length);
-  return WORDS[i];
-}
-
-function HangmanSVG({ mistakes }) {
-  return (
-    <svg viewBox="0 0 120 140" className={styles.svg}>
-      {/* Base */}
-      <line x1="10" y1="130" x2="110" y2="130" stroke="#222" strokeWidth="3"/>
-      {/* Poste */}
-      <line x1="30" y1="130" x2="30" y2="10" stroke="#222" strokeWidth="3"/>
-      <line x1="30" y1="10" x2="80" y2="10" stroke="#222" strokeWidth="3"/>
-      <line x1="80" y1="10" x2="80" y2="25" stroke="#222" strokeWidth="3"/>
-
-      {/* Boneco */}
-      {mistakes > 0 && <circle cx="80" cy="36" r="10" stroke="#111" strokeWidth="2" fill="none" />}
-      {mistakes > 1 && <line x1="80" y1="46" x2="80" y2="80" stroke="#111" strokeWidth="2" />}
-      {mistakes > 2 && <line x1="80" y1="56" x2="65" y2="70" stroke="#111" strokeWidth="2" />}
-      {mistakes > 3 && <line x1="80" y1="56" x2="95" y2="70" stroke="#111" strokeWidth="2" />}
-      {mistakes > 4 && <line x1="80" y1="80" x2="68" y2="105" stroke="#111" strokeWidth="2" />}
-      {mistakes > 5 && <line x1="80" y1="80" x2="92" y2="105" stroke="#111" strokeWidth="2" />}
-    </svg>
-  );
-}
-
 export default function ForcaPage() {
-  const [word, setWord] = useState(() => pickRandom());
+  const [usedWords, setUsedWords] = useState([]);
+  const [word, setWord] = useState(() => pickRandom([]));
   const [guessed, setGuessed] = useState(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [input, setInput] = useState("");
   const maxWrong = 6;
+
+  function pickRandom(prevUsed) {
+    const available = WORDS.filter(w => !prevUsed.includes(w));
+    if (available.length === 0) {
+      return WORDS[Math.floor(Math.random() * WORDS.length)];
+    }
+    const i = Math.floor(Math.random() * available.length);
+    return available[i];
+  }
+
+  function HangmanSVG({ mistakes }) {
+    const parts = [
+      <circle key="head" cx="80" cy="36" r="10" stroke="#111" strokeWidth="2" fill="none" />,
+      <line key="body" x1="80" y1="46" x2="80" y2="80" stroke="#111" strokeWidth="2" />,
+      <line key="armL" x1="80" y1="56" x2="65" y2="70" stroke="#111" strokeWidth="2" />,
+      <line key="armR" x1="80" y1="56" x2="95" y2="70" stroke="#111" strokeWidth="2" />,
+      <line key="legL" x1="80" y1="80" x2="68" y2="105" stroke="#111" strokeWidth="2" />,
+      <line key="legR" x1="80" y1="80" x2="92" y2="105" stroke="#111" strokeWidth="2" />,
+    ];
+
+    return (
+      <svg viewBox="0 0 120 140" className={styles.svg}>
+        {/* Base */}
+        <line x1="10" y1="130" x2="110" y2="130" stroke="#222" strokeWidth="3"/>
+        {/* Poste */}
+        <line x1="30" y1="130" x2="30" y2="10" stroke="#222" strokeWidth="3"/>
+        <line x1="30" y1="10" x2="80" y2="10" stroke="#222" strokeWidth="3"/>
+        <line x1="80" y1="10" x2="80" y2="25" stroke="#222" strokeWidth="3"/>
+        {/* Boneco */}
+        {parts.slice(0, mistakes)}
+      </svg>
+    );
+  }
 
   const revealed = useMemo(() => {
     return word.split("").map(ch => (guessed.has(ch) ? ch : "_"));
@@ -63,12 +70,14 @@ export default function ForcaPage() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!input) return;
-    handleGuess(input[0]);
+    handleGuess(input);
     setInput("");
   }
 
   function restart() {
-    setWord(pickRandom());
+    const newWord = pickRandom([...usedWords, word]);
+    setWord(newWord);
+    setUsedWords(prev => [...prev, word]);
     setGuessed(new Set());
     setMistakes(0);
     setInput("");
@@ -112,6 +121,7 @@ export default function ForcaPage() {
               key={L}
               onClick={() => handleGuess(L)}
               disabled={disabled}
+              aria-label={`Letra ${L}`}
               className={`${styles.key} ${correct ? styles.correct : ""} ${wrong ? styles.wrong : ""}`}
             >
               {L}
