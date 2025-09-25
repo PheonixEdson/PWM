@@ -1,82 +1,225 @@
-.container {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  padding: 40px 20px;
   min-height: 100vh;
-  background: #fff; 
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
+  background: #fff; 
   color: #222;
 }
 
+
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #0070f3;
+  text-align: center;
 }
 
-.svg {
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #555;
+  text-align: center;
+}
+
+.hangman {
+  margin: 20px 0;
+}
+
+.hangman svg {
   width: 200px;
-  height: 200px;
-  display: block;
-  margin: 0 auto 20px;
+  height: 250px;
+  stroke: #222;
+  stroke-width: 4px;
+  fill: none;
 }
 
-.word {
+.hangman .part {
+  display: none;
+}
+
+.wordDisplay {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .letter {
   font-size: 2rem;
   font-weight: bold;
-  border-bottom: 2px solid #333;
-  width: 30px;
-  height: 40px;
+  min-width: 28px;
   text-align: center;
+  border-bottom: 3px solid #0070f3;
+  transition: transform 0.2s ease;
+}
+
+.letter:not(:empty) {
+  color: #0070f3;
+  transform: scale(1.1);
+}
+
+.infoRow {
+  margin: 10px 0 20px;
+  display: flex;
+  gap: 25px;
+  font-size: 1rem;
+  color: #444;
 }
 
 .keyboard {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
   gap: 8px;
-  margin-top: 20px;
+  max-width: 600px;
+  margin: 20px 0;
 }
 
 .key {
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  font-weight: bold;
-  border: 1px solid #aaa;
-  border-radius: 6px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  background: #f5f5f5;
-  transition: 0.2s;
+  font-weight: bold;
+  background: #f5f7fa;
+  color: #333;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-.key:hover {
-  background: #e0e0e0;
+.key:hover:not(:disabled) {
+  background: #0070f3;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 .key:disabled {
-  background: #ccc;
-  color: #777;
+  background: #ddd;
+  color: #888;
   cursor: not-allowed;
 }
 
-.message {
+.correct {
+  background: #28a745 !important;
+  color: white !important;
+}
+
+.wrong {
+  background: #dc3545 !important;
+  color: white !important;
+}
+
+/* Input + Botões */
+.inputRow {
+  display: flex;
+  gap: 10px;
   margin-top: 20px;
-  font-size: 1.5rem;
+}
+
+.input {
+  padding: 10px 14px;
+  border: 2px solid #0070f3;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.input:focus {
+  border-color: #0056b3;
+}
+
+.btn,
+.btnAlt {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.btn {
+  background: #0070f3;
+  color: #fff;
+}
+
+.btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.btnAlt {
+  background: #28a745;
+  color: white;
+}
+
+.btnAlt:hover {
+  background: #1f7d34;
+  transform: scale(1.05);
+}
+
+/* Letras já tentadas */
+.tried {
+  margin-top: 20px;
+  text-align: center;
+  color: #444;
+}
+
+.triedList {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.triedCorrect {
+  color: #28a745;
   font-weight: bold;
 }
 
+.triedWrong {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 25px;
+}
+
+.win,
+.lose {
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-align: center;
+  animation: pop 0.5s ease;
+}
+
 .win {
-  color: green;
+  color: #28a745;
+  background: rgba(40, 167, 69, 0.1);
 }
 
 .lose {
-  color: red;
+  color: #dc3545;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
