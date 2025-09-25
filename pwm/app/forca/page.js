@@ -38,13 +38,12 @@ export default function ForcaPage() {
 
     return (
       <svg viewBox="0 0 120 140" className={styles.svg}>
-        {/* Base */}
+        {/* Base da forca */}
         <line x1="10" y1="130" x2="110" y2="130" stroke="#222" strokeWidth="3"/>
-        {/* Poste */}
         <line x1="30" y1="130" x2="30" y2="10" stroke="#222" strokeWidth="3"/>
         <line x1="30" y1="10" x2="80" y2="10" stroke="#222" strokeWidth="3"/>
         <line x1="80" y1="10" x2="80" y2="25" stroke="#222" strokeWidth="3"/>
-        {/* Boneco */}
+        {/* Boneco aparece aos poucos */}
         {parts.slice(0, mistakes)}
       </svg>
     );
